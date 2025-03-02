@@ -1,6 +1,7 @@
 import requests                    
 import json   
-from bs4 import BeautifulSoup   
+from bs4 import BeautifulSoup 
+from fastapi import FastAPI 
 
 
 
@@ -8,7 +9,11 @@ from bs4 import BeautifulSoup
 #   First, different websites need to be configured differently since the layout of the HTML is different from page to page,
 # so there must be packages for different websites. The website will include 
 
+# creating api so that when frontend access the api route, respective functions will trigger
+app = FastAPI()
 
+
+@app.get("/api/website/{url}")
 def get_website(url: str) -> BeautifulSoup:
     """Get the raw html content of the website"""
 
@@ -17,12 +22,13 @@ def get_website(url: str) -> BeautifulSoup:
     
     return soup
 
-
-def get_comic():
-    """Get a comic from the website, should be the element displayed in their website"""
+@app.get("/api/comics/{url}")
+def get_comics(url: str):
+    """Load comics from the website, should be the element displayed in their website"""
     pass
 
-def get_chapters():
+@app.get("/api/chapters/{comic_name}")
+def get_chapters(comic_name: str):
     """Load chapters from the website"""
     pass
 
